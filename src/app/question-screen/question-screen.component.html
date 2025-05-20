@@ -1,0 +1,38 @@
+<app-root-layout>
+  <div class="screen__wrapper">
+    <div class="question-block">
+      <p class="question-block__title">
+        Question {{ curentQuestion + 1 }}/{{ quizzes.length }}
+      </p>
+      <p class="question-block__content">
+        {{ quizzes.at(curentQuestion)?.question }}
+      </p>
+    </div>
+    <div class="option-list">
+      <mat-radio-group
+        [(ngModel)]="curentAnswer"
+        (ngModelChange)="onAnswerChange($event)"
+      >
+        <mat-card
+          class="option-item"
+          *ngFor="
+            let option of quizzes.at(curentQuestion)?.options;
+            let i = index
+          "
+        >
+          <mat-radio-button [value]="i">{{ option }}</mat-radio-button>
+        </mat-card>
+      </mat-radio-group>
+      <div class="question-action">
+        <button
+          mat-raised-button
+          style="width: 100%"
+          (click)="onNext()"
+          [disabled]="curentAnswer == null"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</app-root-layout>

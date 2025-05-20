@@ -1,0 +1,11 @@
+<app-root-layout>
+  <div class="card-wrapper">
+    <app-result-card
+      [title]="'Complete'"
+      [message]="'Better luck next time!'"
+      [score]="result.score"
+      [time]="result.time"
+      (playAgain)="onClick()"
+    />
+  </div>
+</app-root-layout>

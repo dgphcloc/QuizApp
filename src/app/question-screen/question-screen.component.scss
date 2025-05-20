@@ -1,0 +1,32 @@
+.screen__wrapper {
+  display: flex;
+  align-items: center;
+  color: white;
+  flex-direction: column;
+  height: 100vh;
+}
+.question-block {
+  padding: 40px 0;
+  text-align: center;
+  max-width: 900px;
+  &__title {
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 20px;
+  }
+  &__content {
+    font-size: 18px;
+  }
+}
+.option-list {
+  min-width: 300px;
+  max-width: 600px;
+}
+.option-item {
+  padding: 8px;
+  margin-bottom: 12px;
+}
+.question-action {
+  margin-top: 20px;
+  width: 100%;
+}

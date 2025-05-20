@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-content>
+    <h1>{{ title }}</h1>
+    <p>Score: {{ score }}</p>
+    <p>{{ message }}</p>
+    <p>Time: {{ time | timeToSeconds }} seconds</p>
+    <button mat-raised-button (click)="onClick()">Play again</button>
+  </mat-card-content>
+</mat-card>
