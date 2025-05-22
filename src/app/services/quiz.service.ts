@@ -64,7 +64,7 @@ export class QuizService {
 
   getQuizzes(): Observable<QuizApiResponse> {
     return this.http.get<QuizApiResponse>(
-      'https://opentdb.com/api.php?amount=3'
+      'https://opentdb.com/api.php?amount=5'
     );
   }
 }

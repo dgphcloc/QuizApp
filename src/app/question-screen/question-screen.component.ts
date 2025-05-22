@@ -69,8 +69,6 @@ export class QuestionScreenComponent implements OnInit {
     });
     // check answer
   }
-  // tìm hiểu về ThemePalette
-  //For information on applying color variants in M3, see https://material.angular.dev/guide/material-2-theming#optional-add-backwards-compatibility-styles-for-color-variants
   onNext() {
     if (this.curentAnswer) {
       console.log(this.answersList);
@@ -86,7 +84,11 @@ export class QuestionScreenComponent implements OnInit {
           .setTime(timeDuration)
           .setScore(score)
           .setAnswersList(this.answersList);
-        this.router.navigate(['complete']);
+        if (score >= 3) {
+          this.router.navigate(['congratulations']);
+        } else {
+          this.router.navigate(['complete']);
+        }
       }
     }
   }
