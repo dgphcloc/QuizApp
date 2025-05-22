@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FilterQuizComponent } from '../filter-quiz/filter-quiz.component';
 import { map, Observable, of } from 'rxjs';
 import { DecodeHtmlPipe } from '../pipe/decode-html.pipe';
+import { FormsModule } from '@angular/forms';
 
 export interface PeriodicElement {
   name: string;
@@ -29,11 +30,17 @@ export interface PeriodicElement {
 export type HistoryAnswer = Quiz & Answer;
 
 class QueryBuilder<
-  T extends { type: string; category: string; difficulty: string }
+  T extends {
+    type: string;
+    category: string;
+    difficulty: string;
+    question: string;
+  }
 > {
   private data$: Observable<T[]>;
   private typeFilter: string | null = null;
   private categoryFilter: string | null = null;
+  private searchFilter: string | null = null;
   private difficultyFilter: string | null = null;
   constructor(data: T[]) {
     this.data$ = of(data);
@@ -62,7 +69,14 @@ class QueryBuilder<
     this.difficultyFilter = difficulty;
     return this;
   }
-
+  withSearch(keyword: string): this {
+    this.searchFilter = keyword?.trim().toLowerCase() || null;
+    return this;
+  }
+  clearSearch(): this {
+    this.searchFilter = null;
+    return this;
+  }
   clearDifficulty(): this {
     this.difficultyFilter = null;
     return this;
@@ -84,6 +98,11 @@ class QueryBuilder<
             (item) => item.difficulty === this.difficultyFilter
           );
         }
+        if (this.searchFilter !== null) {
+          result = result.filter((item) =>
+            item.question.toLowerCase().includes(this.searchFilter!)
+          );
+        }
         return result;
       })
     );
@@ -103,6 +122,7 @@ class QueryBuilder<
     MatInputModule,
     FilterQuizComponent,
     DecodeHtmlPipe,
+    FormsModule,
   ],
   templateUrl: './dialog-history-answer.component.html',
   styleUrl: './dialog-history-answer.component.scss',
@@ -117,6 +137,7 @@ export class DialogHistoryAnswerComponent implements OnInit {
     'answer',
     'status',
   ];
+  searchTerm: string = '';
   quizTypes = Object.values(QuizType);
   quizCategories = Object.values(QuizCategory);
   quizDifficultly = Object.values(QuizDifficulty);
@@ -183,7 +204,20 @@ export class DialogHistoryAnswerComponent implements OnInit {
       this.dataSource = filtered;
     });
   }
+  onSearchChange() {
+    console.log('search', this.searchTerm);
+    if (!this.historyAnsBuilder) return;
 
+    if (this.searchTerm.trim()) {
+      this.historyAnsBuilder.withSearch(this.searchTerm);
+    } else {
+      this.historyAnsBuilder.clearSearch();
+    }
+
+    this.historyAnsBuilder.get().subscribe((filtered) => {
+      this.dataSource = filtered;
+    });
+  }
   closeDialog() {
     this.dialogRef.close();
   }
