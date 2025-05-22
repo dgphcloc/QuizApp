@@ -1,0 +1,118 @@
+<mat-card appearance="outlined" class="full-screen-card">
+  <div class="close-block">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="cancel"
+      (click)="closeDialog()"
+    ></mat-icon>
+  </div>
+  <div class="filter-block">
+    <div class="search-bar">
+      <mat-form-field>
+        <mat-label>Tìm kiếm</mat-label>
+        <input matInput placeholder="Nhập từ khóa..." />
+        <button matSuffix mat-icon-button aria-label="Clear">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="filter-bar">
+      <app-filter-quiz
+        [options]="quizTypes"
+        [title]="'type'"
+        (onSelectionChange)="onTypeSelectionChange($event)"
+      ></app-filter-quiz>
+      <app-filter-quiz
+        [options]="quizCategories"
+        [title]="'Category'"
+        (onSelectionChange)="onCategorySelectionChange($event)"
+      ></app-filter-quiz>
+      <app-filter-quiz
+        [options]="quizDifficultly"
+        [title]="'Difficultly'"
+        (onSelectionChange)="onDifficultlySelectionChange($event)"
+      ></app-filter-quiz>
+    </div>
+  </div>
+  <div class="table-block" *ngIf="dataSource.length > 0; else noData">
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Question Column -->
+        <ng-container matColumnDef="question">
+          <th mat-header-cell *matHeaderCellDef>Question</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.question | decodeHtml }}
+          </td>
+        </ng-container>
+
+        <!-- Category Column -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.category | decodeHtml }}
+          </td>
+        </ng-container>
+
+        <!-- Difficulty Column -->
+        <ng-container matColumnDef="difficulty">
+          <th mat-header-cell *matHeaderCellDef>Difficulty</th>
+          <td mat-cell *matCellDef="let element">{{ element.difficulty }}</td>
+        </ng-container>
+
+        <!-- Type Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+        </ng-container>
+
+        <!-- Correct Answer Column -->
+        <ng-container matColumnDef="correct_answer">
+          <th mat-header-cell *matHeaderCellDef>Correct Answer</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.correct_answer }}
+          </td>
+        </ng-container>
+
+        <!-- Your Answer Column -->
+        <ng-container matColumnDef="answer">
+          <th mat-header-cell *matHeaderCellDef>Your Answer</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.answer }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon
+              [color]="
+                element.answer === element.correct_answer ? 'primary' : 'warn'
+              "
+              [ngClass]="{
+                'success-icon': element.answer === element.correct_answer,
+                'fail-icon': element.answer !== element.correct_answer
+              }"
+            >
+              {{
+                element.answer === element.correct_answer
+                  ? "check_circle"
+                  : "cancel"
+              }}
+            </mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-card-content>
+  </div>
+  <ng-template #noData>
+    <mat-card>
+      <mat-card-content>
+        <div class="no-data">
+          <p>No matching quizzes found.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</mat-card>

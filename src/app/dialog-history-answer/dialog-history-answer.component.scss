@@ -1,0 +1,50 @@
+.full-screen-card {
+  height: 100%;
+  background-color: white;
+  padding: 10px;
+  overflow: scroll;
+}
+mat-card-content {
+  color: white;
+}
+.close-block {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.table-block {
+  width: 100%;
+  overflow: scroll;
+}
+.fail-icon {
+  color: red;
+}
+.success-icon {
+  color: green;
+}
+.filter-block {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+@media (max-width: 500px) {
+  .filter-block {
+    flex-direction: column;
+  }
+  .search-bar {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.no-data {
+  text-align: center;
+}
+.search-bar {
+}
+.filter-bar {
+  display: flex;
+  gap: 20px;
+}

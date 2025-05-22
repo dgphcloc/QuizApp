@@ -4,6 +4,7 @@
     <p>Score: {{ score }}</p>
     <p>{{ message }}</p>
     <p>Time: {{ time | timeToSeconds }} seconds</p>
-    <button mat-raised-button (click)="onClick()">Play again</button>
+    <button mat-raised-button (click)="onClick()">Try again</button>
+    <button mat-raised-button (click)="openDialog()">View detail</button>
   </mat-card-content>
 </mat-card>

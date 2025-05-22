@@ -1,0 +1,11 @@
+.select {
+  min-width: 100px;
+}
+::ng-deep .custom-ng-select .ng-dropdown-panel {
+  width: 200px;
+}
+
+::ng-deep .custom-ng-select .ng-dropdown-panel .ng-option {
+  white-space: normal; /* Cho phép xuống dòng nếu quá dài */
+  word-break: break-word;
+}

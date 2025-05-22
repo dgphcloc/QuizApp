@@ -1,0 +1,13 @@
+<div class="select">
+  <ng-select
+    class="custom-ng-select"
+    [items]="options"
+    bindLabel="name"
+    bindValue="id"
+    [(ngModel)]="selectedValue"
+    placeholder="{{ title }}"
+    (change)="handleSelectionChange($event)"
+    [clearable]="true"
+  >
+  </ng-select>
+</div>
